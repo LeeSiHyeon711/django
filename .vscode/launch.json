@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Django",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",  // Django 프로젝트의 manage.py 경로
+            "args": [
+                "runserver",
+                "--noreload"  // 디버깅 시 리로딩 방지
+            ],
+            "django": true,
+            "justMyCode": true  // 사용자가 작성한 코드에만 중단점 설정
+        }
+    ]
+}

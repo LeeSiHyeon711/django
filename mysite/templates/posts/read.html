@@ -22,9 +22,40 @@
          <div>
             <a href="{% url 'posts:list' %}" class="btn btn-primary">목록</a>
             <a href="{% url 'posts:update' post_id=post.id %}" class="btn btn-warning">수정</a>
-            <button type="button" class="btn btn-danger">삭제</button>
+            <button type="button" class="btn btn-danger"
+                    data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
          </div>
         <!-- //게시글 보기 -->
     </div>
 </div>
+<!-- 삭제 모달 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" action="{% url 'posts:delete' post_id=post.id %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-danger" id="deleteModalModalLabel">
+                        <strong>게시글 삭제</strong>
+                    </h1>
+                    <button type="button" class="btn-close" data-bss-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <p class="text-danger">삭제된 데이터는 복구할 수 없습니다.</p>
+                        <p>비밀번호를 입력해주세요.</p>
+                    </div>
+                    <div>
+                        <input type="password" id="password" name="password" placeholder="비밀번호" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-danger">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-bss-dismiss="modal">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- // 삭제 모달 -->
 {% endblock %}
