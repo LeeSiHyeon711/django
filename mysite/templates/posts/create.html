@@ -1,0 +1,68 @@
+{% extends "../base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- 게시글 등록 -->
+         <form id="createForm" method="POST">
+            {% csrf_token %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <span class="text-danger">*</span> 표시는 필수항목입니다.
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">제목 <span class="text-danger">*</span></label>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요."
+                                value="{{ form.title.value|default_if_none:'' }}">
+                        {% if form.title.errors %}
+                        <div class="form-text text-danger">
+                            {{ form.title.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">
+                            내용<span class="text-danger">*</span>
+                        </label>
+                        <textarea rows="10" id="content" name="content" class="form-control" placeholder="내용을 입력하세요.">
+                            {{ form.content.value|default_if_none:'' }}
+                        </textarea>
+                        {% if form.content.errors %}
+                        <div class="form-text text-danger">
+                            {{ form.conttent.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">
+                            글쓴이 <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="글쓴이를 입력하세요."
+                            value="{{ form.username.value|default_if_none:'' }}">
+                        {% if form.username.errors %}
+                        <div class="form-text text-danger">
+                            {{ form.username.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="password" class="form-label">비밀번호 <span class="text-danger">*</span></label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요.">
+                        {% if form.password.errors %}
+                        <div class="form-text text-danger">
+                            {{ form.password.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">등록</button>
+                <a href="{% url 'posts:list' %}" class="btn btn-secondary">취소</a>
+            </div>
+         </form>
+         <!-- // 게시글 등록 -->
+    </div>
+</div>
+{% endblock %}
