@@ -1,0 +1,43 @@
+{% extends "../base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- 등록 버튼 -->
+         <div>
+            <a href="{% url 'posts:create' %}" class="btn btn-primary">등록</a>
+         </div>
+         <!-- // 등록 버튼 -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <!-- 게시글 목록 -->
+         <div class="table-responsive">
+            <table class="table table-bordered mt-3">
+             <thead>
+             <tr class="text-center">
+                 <th>순번</th>
+                 <th>제목</th>
+                 <th>글쓴이</th>
+                 <th>등록일시</th>
+                 <th>수정일시</th>
+             </tr>
+             </thead>
+             <tbody>
+                    {% for post in posts %}
+                    <tr>
+                        <td class="text-center">{{ forloop.counter }}</td>
+                    <td><a href="{% url 'posts:read' post_id=post.id %}">{{ post.title }}</a></td>
+                        <td class="text-center">{{ post.username }}</td>
+                        <td class="text-center">{{ post.created_at }}</td>
+                        <td class="text-center">{{ post.updated_at }}</td>
+                  </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+         </div>
+        <!-- // 게시글 목록 -->
+    </div>
+</div>
+{% endblock %}
