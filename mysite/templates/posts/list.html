@@ -28,7 +28,7 @@
                     {% for post in posts %}
                     <tr>
                         <td class="text-center">{{ forloop.counter }}</td>
-                    <td><a href="{% url 'posts:read' post_id=post.id %}">{{ post.title }}</a></td>
+                        <td><a href="{% url 'posts:read' post_id=post.id %}">{{ post.title }}</a></td>
                         <td class="text-center">{{ post.username }}</td>
                         <td class="text-center">{{ post.created_at }}</td>
                         <td class="text-center">{{ post.updated_at }}</td>

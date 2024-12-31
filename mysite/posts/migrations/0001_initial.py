@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ("title", models.CharField(max_length=100, verbose_name="제목")),
                 ("content", models.TextField(verbose_name="내용")),
                 (
-                    "passsword",
+                    "password",
                     models.CharField(max_length=100, verbose_name="비밀번호"),
                 ),
                 ("username", models.CharField(max_length=10, verbose_name="글쓴이")),
