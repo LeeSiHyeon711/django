@@ -3,11 +3,28 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <!-- 등록 버튼 -->
-         <div>
-            <a href="{% url 'posts:create' %}" class="btn btn-primary">등록</a>
-         </div>
-         <!-- // 등록 버튼 -->
+        <!-- 검색, 등록 버튼 -->
+         <div class='d-flex justify-content-between'>
+            <!-- 검색 폼 -->
+            <form method="GET">
+                <div class="input-group">
+                    <select name="searchType" class="form-select w-auto">
+                        <option value="all" {% if searchType == 'all' %}selected{% endif %}>전체</option>
+                        <option value="title" {% if searchType == 'title' %}selected{% endif %}>제목</option>
+                        <option value="content" {% if searchType == 'content' %}selected{% endif %}>내용</option>
+                        <option value="username" {% if searchType == 'username' %}selected{% endif %}>작성자</option>
+                    </select>
+                    <input type="text" name="searchKeyword" class="form-control w-auto" value="{{ searchKeyword|default_if_none:"" }}">
+                    <button type="submit" class="btn btn-primary">검색</button>
+                    {% if searchType != null %}
+                        <a href="{% url 'posts:list' %}" class="btn btn-danger">취소</a>
+                    {% endif %}
+                </div>
+            </form>
+            <!-- 등록 버튼 -->
+             <a href="{% url 'posts:create' %}" class="btn btn-primary">등록</a>
+        </div>
+        <!-- //검색, 등록 버튼 -->
     </div>
 </div>
 <div class="row">
@@ -38,6 +55,43 @@
             </table>
          </div>
         <!-- // 게시글 목록 -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <!-- 페이지네이션 -->
+         <div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <!-- 이전 페이지 -->
+                     {% if posts.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.previous_page_number }}">이전</a>
+                        </li>
+                    {% endif %}
+                    <!-- //이전 페이지-->
+                    <!-- 페이지 리스트-->
+                    {% for page_number in posts.paginator.page_range %}
+                        {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
+                            <li class="page-item {% if page_number == posts.number %}active{% endif %}">
+                                <a class="page-link" href="{% url 'posts:list' %}?page={{ page_number }}">
+                                    {{ page_number }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    <!-- //페이지 리스트 -->
+                    <!-- 다음 페이지 -->
+                    {% if posts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.next_page_number }}">다음</a>
+                        </li>
+                    {% endif %}
+                    <!-- //다음 페이지 -->
+                </ul>
+            </nav>
+        </div>
+        <!-- //페이지네이션 -->
     </div>
 </div>
 {% endblock %}
